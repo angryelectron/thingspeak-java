@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.angryelectron.thingspeak;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
+import java.util.UUID;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,82 +19,96 @@ import static org.junit.Assert.*;
  * @author abythell
  */
 public class ChannelTest {
-    
+
+    final String writeKey = "8OBEPNQB06X9WDMZ ";
+    final String readKey = "CLXKLBG0GB0M766F";
+    final Integer channelId = 9235;
+    private Integer entry_id;
+    private Channel channel;
+    private Entry entry;
+
     public ChannelTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
-    public void setUp() {
+    public void setUp() throws UnirestException, ThingSpeakException {
+        channel = new Channel(channelId, writeKey, readKey);
+        entry = new Entry();
+        entry.setField(1, UUID.randomUUID().toString());
+        entry.setField(2, String.valueOf(Math.random()));
+        entry.setElevation(Math.random());
+        entry.setLat(Math.random());
+        entry.setLong(Math.random());
+        entry.setStatus(UUID.randomUUID().toString());
+        entry_id = channel.update(entry);
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
      * Test of update method, of class Channel.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testUpdate() throws Exception {
         System.out.println("update");
-        Entry entry = null;
-        Channel instance = null;
-        Integer expResult = null;
-        Integer result = instance.update(entry);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertFalse(entry_id == 0);
     }
 
     /**
      * Test of getChannelFeed method, of class Channel.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetChannelFeed_0args() throws Exception {
         System.out.println("getChannelFeed");
-        Channel instance = null;
-        Feed expResult = null;
-        Feed result = instance.getChannelFeed();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Feed result = channel.getChannelFeed();
+        assertNotNull(result);
+        assertEquals(result.getChannelId(), this.channelId);
     }
 
     /**
      * Test of getChannelFeed method, of class Channel.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetChannelFeed_FeedParameters() throws Exception {
         System.out.println("getChannelFeed");
-        FeedParameters options = null;
-        Channel instance = null;
-        Feed expResult = null;
-        Feed result = instance.getChannelFeed(options);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        FeedParameters options = new FeedParameters();
+        options.location(true);
+
+        Feed feed = channel.getChannelFeed(options);
+        Entry result = feed.getEntry(entry_id);
+        assertNotNull(result.getElevation());
+        assertEquals(result.getElevation(), entry.getElevation(), 1);
     }
 
     /**
      * Test of getLastChannelEntry method, of class Channel.
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetLastChannelEntry_0args() throws Exception {
         System.out.println("getLastChannelEntry");
-        Channel instance = null;
-        Entry expResult = null;
-        Entry result = instance.getLastChannelEntry();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Feed feed = channel.getChannelFeed();
+        Entry result = feed.getLastEntry();
+        assertEquals(result.getField(1), entry.getField(1));
+        assertEquals(result.getField(2), entry.getField(2));
+        //TODO:  getField() returns string - it cannot know the data type
     }
 
     /**
@@ -102,13 +117,13 @@ public class ChannelTest {
     @Test
     public void testGetLastChannelEntry_FeedParameters() throws Exception {
         System.out.println("getLastChannelEntry");
-        FeedParameters options = null;
-        Channel instance = null;
-        Entry expResult = null;
-        Entry result = instance.getLastChannelEntry(options);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        FeedParameters options = new FeedParameters();
+        options.location(true);
+        Feed feed = channel.getChannelFeed(options);
+        Entry result = feed.getLastEntry();
+        assertEquals(result.getElevation(), entry.getElevation(), 1);
+        assertEquals(result.getField(1), entry.getField(1));
+        assertEquals(result.getField(2), entry.getField(2));
     }
 
     /**
@@ -237,5 +252,5 @@ public class ChannelTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }
