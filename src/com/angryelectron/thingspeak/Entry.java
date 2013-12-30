@@ -19,14 +19,14 @@ public class Entry {
      */
     private Date created_at;
     private Integer entry_id;
-    private Object field1;
-    private Object field2;
-    private Object field3;
-    private Object field4;
-    private Object field5;
-    private Object field6;
-    private Object field7;
-    private Object field8;
+    private String field1;
+    private String field2;
+    private String field3;
+    private String field4;
+    private String field5;
+    private String field6;
+    private String field7;
+    private String field8;
     private Double lat;
     @SerializedName("long") private Double longitude;
     private Double elevation;
@@ -71,7 +71,7 @@ public class Entry {
      * @param field 1-8.
      * @param value Value for field.  Type depends on channel config.
      */
-    public void setField(Integer field, Object value) {
+    public void setField(Integer field, String value) {
         switch(field) {
             case 1:
                 field1 = value;
