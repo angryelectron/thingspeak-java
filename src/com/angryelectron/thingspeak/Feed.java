@@ -3,7 +3,6 @@ package com.angryelectron.thingspeak;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,7 +60,7 @@ public class Feed {
     }
     
     /**
-     * Get names of fields.
+     * Get names of fields.  Cannot be called on status feeds.
      * @param field 1-8.
      * @return The assigned name of the field.  Set via web.
      */
@@ -88,7 +87,7 @@ public class Feed {
     }
     
     /**
-     * Channel ID.  Not that useful, as you need to know this in advance.
+     * Channel ID.  Not that useful, as you need to know this in advance.     
      * @return ID of this channel.
      */
     public Integer getChannelId() {
@@ -96,11 +95,11 @@ public class Feed {
     }
     
     /**
-     * Last entry ID.
+     * Last entry ID.  Cannot be called on status feeds.
      * @return The ID of the last entry made in this channel.  Can be useful
      * for looking up entries within feeds.
      */
-    public Integer getLastEntryId() {
+    public Integer getChannelLastEntryId() {
         return channel.last_entry_id;
     }
     
@@ -113,7 +112,7 @@ public class Feed {
     }
     
     /**
-     * Channel update date.
+     * Channel update date.  
      * @return The date of the last update of this channel.
      */
     public Date getChannelUpdateDate() {
@@ -124,7 +123,7 @@ public class Feed {
      * Get a List of all Entries in this feed.
      * @return All entries in this feed.
      */
-    public List<Entry> getEntryList() {
+    public ArrayList<Entry> getEntryList() {
         return this.feeds;
     }
     
@@ -156,16 +155,17 @@ public class Feed {
                 return entry;
             }
         }
-        throw new ThingSpeakException("Entry with ID " + id + "not found in feed.");
+        throw new ThingSpeakException("Entry with ID " + id + " not found in feed.");
                 
     }
     
     /**
-     * Get the last / latest entry in this feed.
+     * Get the last / latest entry in this feed.  If you only need the last entry
+     * and not the rest of the feed, consider using {@link Channel#getLastChannelEntry()}. 
      * @return An Entry with id equal to the feed's last_entry_id.
      * @throws ThingSpeakException The channel does not have a last entry.
      */
-    public Entry getLastEntry() throws ThingSpeakException {
+    public Entry getChannelLastEntry() throws ThingSpeakException {
             return getEntry(channel.last_entry_id);
     }
 

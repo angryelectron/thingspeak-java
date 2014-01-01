@@ -1,6 +1,5 @@
 package com.angryelectron.thingspeak;
 
-import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -11,11 +10,10 @@ import java.util.HashMap;
 public class Entry {
     
     /**
-     * The names (and possibly the order) of these private members must match
-     * the JSON fields in a channel's feed.  If they don't, GSON might not
-     * be able to deserialize the JSON feed into Entry objects.  'longitude'
-     * is annotated since 'long' is a primitive datatype.
-     * 
+     * The names of these private members must match the JSON fields in a
+     * channel's feed. If they don't, GSON might not be able to deserialize the
+     * JSON feed into Entry objects. Note that 'longitude' and 'latitude' are
+     * returned by feeds, but 'lat' and 'long' are used when updating.
      */
     private Date created_at;
     private Integer entry_id;
@@ -27,18 +25,24 @@ public class Entry {
     private String field6;
     private String field7;
     private String field8;
-    private Double lat;
-    @SerializedName("long") private Double longitude;
+    private Double latitude;
+    private Double longitude;
     private Double elevation;
     private String status;
     private String twitter;
     private String tweet;
-    private final HashMap<String, Object> fields = new HashMap<>();
-
-    protected HashMap<String, Object> getFields() {
-        return fields;
-    }
     
+    private final HashMap<String, Object> updateMap = new HashMap<>();
+
+    /**
+     * Get a map of all fields in a format compatible with the API's update
+     * parameters.
+     * @return Field map.
+     */
+    protected HashMap<String, Object> getUpdateMap() {        
+        return updateMap;
+    }
+            
     /**
      * Get data for field.
      * @param field 1-8
@@ -75,35 +79,35 @@ public class Entry {
         switch(field) {
             case 1:
                 field1 = value;
-                fields.put("field1", value);
+                updateMap.put("field1", value);
                 return;
             case 2:
                 field2 = value;
-                fields.put("field2", value);
+                updateMap.put("field2", value);
                 return;
             case 3:
                 field3 = value;
-                fields.put("field3", value);
+                updateMap.put("field3", value);
                 return;
             case 4:
                 field4 = value;
-                fields.put("field4", value);
+                updateMap.put("field4", value);
                 return;
             case 5:
                 field5 = value;
-                fields.put("field5", value);
+                updateMap.put("field5", value);
                 return;
             case 6:
                 field6 = value;
-                fields.put("field6", value);
+                updateMap.put("field6", value);
                 return;
             case 7:
                 field7 = value;
-                fields.put("field7", value);
+                updateMap.put("field7", value);
                 return;
             case 8:
                 field8 = value;
-                fields.put("field8", value);
+                updateMap.put("field8", value);
                 return;
         }
         throw new IllegalArgumentException("Invalid field.");
@@ -113,24 +117,24 @@ public class Entry {
      * Get latitude.
      * @return Latitude, in decimal degrees.
      */
-    public Double getLat() {
-        return lat;
+    public Double getLatitude() {
+        return latitude;
     }
 
     /**
-     * Set latitude.
-     * @param lat Latitude, in decimal degrees.
+     * Set latitude.     
+     * @param latitude Latitude, in decimal degrees.
      */
-    public void setLat(Double lat) {
-        this.lat = lat;
-        fields.put("lat", lat);
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+        updateMap.put("lat", latitude);
     }
 
     /**
      * Get longitude.
      * @return Longitude, in decimal degrees.
      */
-    public Double getLong() {        
+    public Double getLongitude() {        
         return longitude;
     }
 
@@ -140,7 +144,7 @@ public class Entry {
      */
     public void setLong(Double longitude) {
         this.longitude = longitude;
-        fields.put("long", longitude);
+        updateMap.put("long", longitude);
     }
 
     /**
@@ -157,7 +161,7 @@ public class Entry {
      */
     public void setElevation(Double elevation) {
         this.elevation = elevation;
-        fields.put("elevation", elevation);
+        updateMap.put("elevation", elevation);
     }
 
     /**
@@ -174,7 +178,7 @@ public class Entry {
      */
     public void setStatus(String status) {
         this.status = status;
-        fields.put("status", status);
+        updateMap.put("status", status);
     }
 
     /**
@@ -193,7 +197,7 @@ public class Entry {
      */
     public void setTwitter(String twitter) {
         this.twitter = twitter;
-        fields.put("twitter", twitter);
+        updateMap.put("twitter", twitter);
     }
 
     /**
@@ -212,7 +216,7 @@ public class Entry {
      */
     public void setTweet(String tweet) {
         this.tweet = tweet;
-        fields.put("tweet", tweet);
+        updateMap.put("tweet", tweet);
     }
 
     /**

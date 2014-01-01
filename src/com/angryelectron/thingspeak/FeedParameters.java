@@ -56,8 +56,10 @@ public class FeedParameters {
     }
             
     /**
-     * Set the number of results to be returned.
-     * @param results 8000 max.
+     * Set the number of results to be returned.  Feeds that return more than 100
+     * entries are cached for 5 minutes, so set results &lt; 100 for real time 
+     * applications.
+     * @param results 8000 max, or less than 100 to disable 5 minute data cache.
      */
     public void results(Integer results) {
         if (results > 8000) {
@@ -99,10 +101,10 @@ public class FeedParameters {
     
     /**
      * Include status information.
-     * @param status Feed includes the status field when True.
+     * @param include Feed includes the status field when True.
      */
-    public void status(String status) {
-        fields.put("status", status);
+    public void status(Boolean include) {
+        fields.put("status", include);
     }
     
     /**
