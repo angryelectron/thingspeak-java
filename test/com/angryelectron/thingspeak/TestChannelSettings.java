@@ -11,7 +11,7 @@ package com.angryelectron.thingspeak;
  * to fail.  Clear all the feed data from the channel to avoid this problem.
  */
 public class TestChannelSettings {
-    /*
+        
     public static String server = "http://api.thingspeak.com";    
     public static Integer publicChannelID = 9235;
     public static String publicChannelWriteKey = "8OBEPNQB06X9WDMZ";    
@@ -19,14 +19,15 @@ public class TestChannelSettings {
     public static String privateChannelWriteKey = "AATBGE761SG6QE7J ";
     public static String privateChannelReadKey = "O7YHHVZMQSXRNJI2";    
     public static Integer rateLimit = 15000;    
-    */
-    
+       
+    /*
     public static Integer publicChannelID = 1;
-    public static String publicChannelWriteKey = "2G47C9RE1C1YB6QI";    
+    public static String publicChannelWriteKey = "N6ES1RM97J3846NU ";    
     public static Integer privateChannelID = 2;
-    public static String privateChannelWriteKey = "VFDJ8Z65C0AT2188  ";
-    public static String privateChannelReadKey = "A9OB65FTLYEK31V1";    
-    public static Integer rateLimit = 15000; /* api rate limit in ms */
-    public static String server = "http://192.168.2.186:3000";
+    public static String privateChannelWriteKey = "UGN3RZYIVFKZLIHZ  ";
+    public static String privateChannelReadKey = "PIHR34GGPEKCOINR";    
+    public static Integer rateLimit = 0; 
+    public static String server = "http://192.168.2.190:3000";
+    */
     
 }

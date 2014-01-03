@@ -66,6 +66,13 @@ public class UpdateTest {
     public void testUpdateFasterThanAPIRateLimit() throws Exception {
         System.out.println("testUpdateFasterThanAPIRateLimit");
         /**
+         * On self-hosted servers, there is no rate limiting
+         */
+        if (TestChannelSettings.rateLimit == 0) {
+            throw new ThingSpeakException("Rate limiting not supported");
+        }
+        
+        /**
          * Do an update and make sure it succeeds.
          */
         Channel channel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);
