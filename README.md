@@ -1,18 +1,17 @@
 ThingSpeak Java Client 
 ===
-A Java client library for the [ThingSpeak](http://thingspeak.com) Internet of 
-Things.  Works with the hosted ThingSpeak server at api.thingspeak.com as well 
-as the self-hosted open-source server 
-([GitHub Source](https://github.com/iobridge/thingspeak)). 
+A Java client for the [ThingSpeak](http://thingspeak.com) Internet of 
+Things.  Implements all aspects of the ThingSpeak API and can be used to 
+update channel data, retrieve and examine feeds, and query public channels. 
+It supports the hosted ThingSpeak server at api.thingspeak.com as well 
+as self-hosted open-source servers ([GitHub Source](https://github.com/iobridge/thingspeak)). 
 
 How To Install
 ---
-Get the source by [downloading a zip file](https://github.com/angryelectron/ThingSpeak/archive/master.zip)To build from source, git clone https://github.com/angryelectron/thingspeak.git),
+Get the source by [downloading a zip file](https://github.com/angryelectron/ThingSpeak/archive/master.zip)
 or by cloning the git repository https://github.com/angryelectron/thingspeak.git .
 Building the source requires either the [Netbeans IDE](http://netbeans.org) or a 
-Java 7 SDK and Apache Ant.
-
-Build the project by opening it in the Netbeans IDE, or from the command line.  
+Java 7 SDK and Apache Ant. Build the project by opening it in the Netbeans IDE, or from the command line.  
 
 Here is an example of how to install the client in Ubuntu/Debian/Raspbian:
 
@@ -38,31 +37,27 @@ Refer to the included javadocs for more details.  The
 [ThingSpeak API Documentation](http://community.thingspeak.com/documentation/api/#thingspeak_api)
 is also a good source of additional information.
 
-Example
----
-Here is how to write field1 of ThingSpeak public channel 1234 with the value "hello":
+Here is how to write "hello" to field1 of ThingSpeak public channel 1234:
 
 ```
 String apiWriteKey = "your-channel-write-key";
 Channel channel = new Channel(1234, apiWriteKey);
 
-Entry data = new Entry();
-write.setField(1, "hello");
-
-channel.update(write);
+Entry entry = new Entry();
+entry.setField(1, "hello");
+channel.update(entry);
 ```
 
 And here is how to read it back:
 
 ```
-/* setup read-only channel */
 Channel channel = new Channel(1234);
-
-/* read */
-Entry data = channel.getLastChannelEntry();
-
-System.out.println(data.getField(1);
+Entry entry = channel.getLastChannelEntry();
+System.out.println(entry.getField(1);
 ```
+
+If you encounter any issues with the ThingSpeak Java Client, please use the [GitHub issue tracker](https://github.com/angryelectron/ThingSpeak/issues).
+
 
 About
 ---
