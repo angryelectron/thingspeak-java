@@ -8,8 +8,8 @@ as self-hosted open-source servers ([GitHub Source](https://github.com/iobridge/
 
 How To Install
 ---
-Get the source by [downloading a zip file](https://github.com/angryelectron/ThingSpeak/archive/master.zip)
-or by cloning the git repository https://github.com/angryelectron/thingspeak.git .
+Get the source by [downloading a zip file](https://github.com/angryelectron/thingspeak-java/archive/master.zip)
+or by cloning the git repository https://github.com/angryelectron/thingspeak-java.git .
 Building the source requires either the [Netbeans IDE](http://netbeans.org) or a 
 Java 7 SDK and Apache Ant. Build the project by opening it in the Netbeans IDE, or from the command line.  
 
@@ -18,7 +18,7 @@ Here is an example of how to install the client in Ubuntu/Debian/Raspbian:
 ```
 sudo apt-get update
 sudo apt-get -y install openjdk-7-jdk git ant
-git clone https://github.com/angryelectron/thingspeak.git
+git clone https://github.com/angryelectron/thingspeak-java.git
 cd thingspeak
 ant jar
 ant test #optional - run tests 
@@ -56,14 +56,14 @@ Entry entry = channel.getLastChannelEntry();
 System.out.println(entry.getField(1);
 ```
 
-If you encounter any issues with the ThingSpeak Java Client, please use the [GitHub issue tracker](https://github.com/angryelectron/ThingSpeak/issues).
+If you encounter any issues with the ThingSpeak Java Client, please use the [GitHub issue tracker](https://github.com/angryelectron/thingspeak-java/issues).
 
 
 About
 ---
 * ThingSpeak Java Client 
 * Copyright 2014, Andrew Bythell <abythell@ieee.org>
-* http://angryelectron.com
+* http://angryelectron.com/projects/thingspeak-java-client/
  
 The ThingSpeak Java Client is free software: you can redistribute it and/or
 modify it under the terms of the GNU General Public License as published by
