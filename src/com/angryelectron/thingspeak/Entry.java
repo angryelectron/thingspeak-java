@@ -1,19 +1,40 @@
+/**
+ * ThingSpeak Java Client 
+ * Copyright 2014, Andrew Bythell <abythell@ieee.org>
+ * http://angryelectron.com
+ *
+ * The ThingSpeak Java Client is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * The ThingSpeak Java Client is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * theThingSpeak Java Client. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.angryelectron.thingspeak;
 
 import java.util.Date;
 import java.util.HashMap;
 
 /**
- * Channel entry.  Contains a single dataset which is used to update channels
- * and is returned by feeds.  
+ * Create a new Entry to update a channel, or retrieve individual elements from
+ * a {@link Feed}.
+ * 
  */
 public class Entry {
     
     /**
      * The names of these private members must match the JSON fields in a
-     * channel's feed. If they don't, GSON might not be able to deserialize the
-     * JSON feed into Entry objects. Note that 'longitude' and 'latitude' are
-     * returned by feeds, but 'lat' and 'long' are used when updating.
+     * channel feed returned by ThingSpeak. If they don't, GSON might not be
+     * able to deserialize the JSON feed into Entry objects. Note that
+     * 'longitude' and 'latitude' are returned by feeds, but 'lat' and 'long'
+     * are used when updating.
      */
     private Date created_at;
     private Integer entry_id;
@@ -36,17 +57,19 @@ public class Entry {
 
     /**
      * Get a map of all fields in a format compatible with the API's update
-     * parameters.
+     * parameters.  Used internally by {@link Channel#update(com.angryelectron.thingspeak.Entry)}.
      * @return Field map.
      */
-    protected HashMap<String, Object> getUpdateMap() {        
+    HashMap<String, Object> getUpdateMap() {        
         return updateMap;
     }
             
     /**
-     * Get data for field.
+     * Get data for a field.  Fields must be enabled via the web in the Channel's
+     * settings.
      * @param field 1-8
-     * @return Field data - cast to appropriate type.
+     * @return Field data; null for status feeds,  undefined fields, and field 
+     * feeds where field was not specified.
      */
     public Object getField(Integer field) {
         switch(field) {
@@ -71,9 +94,10 @@ public class Entry {
     }
 
     /**
-     * Set the value for a field.
+     * Set the value for a field.  Fields must be enabled via the web in the Channel's
+     * settings.
      * @param field 1-8.
-     * @param value Value for field.  Type depends on channel config.
+     * @param value Value for field.  
      */
     public void setField(Integer field, String value) {
         switch(field) {
@@ -115,7 +139,9 @@ public class Entry {
     
     /**
      * Get latitude.
-     * @return Latitude, in decimal degrees.
+     * @return Latitude, in decimal degrees; 0.0 if undefined; null for status feeds or if 
+     * location info was not requested using {@link FeedParameters#location(java.lang.Boolean) }.
+     * 
      */
     public Double getLatitude() {
         return latitude;
@@ -131,8 +157,9 @@ public class Entry {
     }
 
     /**
-     * Get longitude.
-     * @return Longitude, in decimal degrees.
+     * Get longitude. 
+     * @return Longitude, in decimal degrees; 0.0 if undefined; null for status feeds or if
+     * location info was not requested using {@link FeedParameters#location(java.lang.Boolean) }.
      */
     public Double getLongitude() {        
         return longitude;
@@ -149,7 +176,8 @@ public class Entry {
 
     /**
      * Get elevation.
-     * @return Elevation, in meters.
+     * @return Elevation, in meters; 0.0 if undefined; null for status feeds or if
+     * location info was not requested using {@link FeedParameters#location}.
      */
     public Double getElevation() {
         return elevation;
@@ -166,7 +194,8 @@ public class Entry {
 
     /**
      * Get status.
-     * @return Status string.
+     * @return Status string; null for Channel and Field feeds if status info
+     * was not requested using {@link FeedParameters#status(java.lang.Boolean)}
      */
     public String getStatus() {
         return status;
@@ -180,16 +209,7 @@ public class Entry {
         this.status = status;
         updateMap.put("status", status);
     }
-
-    /**
-     * Get Twitter username.  If set, a tweet will be posted to the user's 
-     * twitter feed for each channel update.
-     * @return Twitter username.
-     */
-    public String getTwitter() {
-        return twitter;
-    }
-
+    
     /**
      * Set Twitter username.  If set, a tweet will be posted to the user's
      * twitter feed for each channel update.
@@ -198,15 +218,6 @@ public class Entry {
     public void setTwitter(String twitter) {
         this.twitter = twitter;
         updateMap.put("twitter", twitter);
-    }
-
-    /**
-     * Get Twitter message.  This message will be posted to the user's twitter 
-     * feed for each channel update.
-     * @return 
-     */
-    public String getTweet() {
-        return tweet;
     }
 
     /**
@@ -220,8 +231,8 @@ public class Entry {
     }
 
     /**
-     * Get date on which this channel entry was created.  Use the offset setting
-     * in FeedParameters to adjust to local timezones.
+     * Get date on which this channel entry was created.  Use 
+     * {@link FeedParameters#offset(java.lang.Integer)} to adjust timezones.
      * @return Date.
      */
     public Date getCreated() {        

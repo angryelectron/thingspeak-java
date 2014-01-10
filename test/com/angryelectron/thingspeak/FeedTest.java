@@ -1,3 +1,22 @@
+/**
+ * ThingSpeak Java Client 
+ * Copyright 2014, Andrew Bythell <abythell@ieee.org>
+ * http://angryelectron.com
+ *
+ * The ThingSpeak Java Client is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * The ThingSpeak Java Client is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * theThingSpeak Java Client. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.angryelectron.thingspeak;
 
 import java.text.SimpleDateFormat;
@@ -250,5 +269,32 @@ public class FeedTest {
         Date pst = last.getCreated();                     
         SimpleDateFormat df = new SimpleDateFormat("Z");
         assert(df.format(pst).equals("-0800"));        
-    }                                                    
+    }      
+    
+    @Test
+    public void testGetStatus_emptyFields() throws Exception {
+        Channel channel = new Channel(TestChannelSettings.publicChannelID);
+        channel.setUrl(TestChannelSettings.server);
+        Feed statusFeed = channel.getStatusFeed();
+        assertNull(statusFeed.getChannelCreationDate());
+        assertNull(statusFeed.getChannelDescription());
+        assertNull(statusFeed.getChannelId());
+        try {
+            assertNull(statusFeed.getChannelLastEntry());
+        } catch (ThingSpeakException ex) {
+            /* this is expected */
+        }
+        assertNull(statusFeed.getChannelLastEntryId());
+        assertNotNull(statusFeed.getChannelName());
+        assertNull(statusFeed.getChannelUpdateDate());
+        assertNull(statusFeed.getFieldName(1));
+        for (Entry entry : statusFeed.getEntryList()) {
+            assertNull(entry.getElevation());
+            assertNull(entry.getField(1));
+            assertNull(entry.getLatitude());
+            assertNull(entry.getLongitude());            
+        }
+        
+    }
+        
 }

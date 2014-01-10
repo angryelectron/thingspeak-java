@@ -22,6 +22,11 @@ package com.angryelectron.thingspeak.pub;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * POJO to handle de-serialized JSON Public Channel data. Provides methods to
+ * PublicIterator for accessing paging info.
+ * @author abythell
+ */
 class PublicJSONResult {
     
     /**
@@ -39,10 +44,18 @@ class PublicJSONResult {
     private final Pagination pagination = new Pagination();
     private final ArrayList<PublicChannel> channels = new ArrayList<>();
    
+    /**
+     * Get the current page represented by the data in channels.
+     * @return Page number.
+     */
     Integer getCurrentPage() {
         return pagination.current_page;
     }
         
+    /**
+     * Determine if the current page is the last one in the set.
+     * @return True if this is the last page.
+     */
     Boolean isLastPage() {
         if (pagination.total_entries <= pagination.per_page) {
             return true;
@@ -52,10 +65,19 @@ class PublicJSONResult {
         }
     }
     
+    /**
+     * Get the iterator for the channel data.  Used by PublicIterator to access
+     * the PublicChannel objects stored in the current page.
+     * @return 
+     */
     Iterator<PublicChannel> iterator() {
         return channels.iterator();
     }
     
+    /**
+     * Get a total count of all public channels.
+     * @return Number of public channels in this result.
+     */
     Integer getTotalEntries() {
         return pagination.total_entries;
     }
