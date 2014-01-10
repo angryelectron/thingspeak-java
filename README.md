@@ -9,10 +9,12 @@ How To Build
 To build from source, git clone https://github.com/angryelectron/thingspeak.git.
 Then build the project using the Netbeans IDE, or from the command line using:
 
+```
 cd thingspeak
 ant jar #build jars 
 ant javadoc #optional - build documentation 
 ant test #optional - run tests 
+```
 
 The jars, docs, and dependencies can be found in thingspeak/dist.
 
