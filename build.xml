@@ -70,4 +70,11 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <target name="-post-jar" description="bundle sources and javadoc in a jar" depends="javadoc">
+        <jar compress="${jar.compress}" basedir="${src.dir}" jarfile="${dist.dir}/${application.title}-sources.jar"/>
+        <jar compress="${jar.compress}" basedir="${test.src.dir}" jarfile="${dist.dir}/${application.title}-test.jar"/>
+        <jar compress="${jar.compress}" basedir="${dist.javadoc.dir}" jarfile="${dist.dir}/${application.title}-javadoc.jar"/>
+    </target>
+            
 </project>
