@@ -6,7 +6,7 @@ open-source server ([GitHub Source](https://github.com/iobridge/thingspeak)).
 
 How To Build
 ---
-To build from source, git clone https://github.com/angryelectron/thingspeak.
+To build from source, git clone https://github.com/angryelectron/thingspeak.git.
 Then build the project using the Netbeans IDE, or from the command line using:
 
 cd thingspeak
