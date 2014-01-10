@@ -37,7 +37,7 @@ public class TestChannelSettings {
     public static Integer privateChannelID = 9438;
     public static String privateChannelWriteKey = "AATBGE761SG6QE7J ";
     public static String privateChannelReadKey = "O7YHHVZMQSXRNJI2";    
-    public static Integer rateLimit = 15000;    
+    public static Integer rateLimit = 16000;    
        
     /*
     public static Integer publicChannelID = 1;
