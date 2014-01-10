@@ -19,7 +19,7 @@ Here is an example of how to install the client in Ubuntu/Debian/Raspbian:
 sudo apt-get update
 sudo apt-get -y install openjdk-7-jdk git ant
 git clone https://github.com/angryelectron/thingspeak-java.git
-cd thingspeak
+cd thingspeak-java
 ant jar
 ant test #optional - run tests 
 ```
