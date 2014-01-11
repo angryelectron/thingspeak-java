@@ -28,12 +28,12 @@ The jars, docs, and dependencies can be found in thingspeak/dist.
 
 How To Use
 ---
-Add thingspeak-x.y.jar to your project.  There are two dependencies which
-also need to be included: [Unirest](http://unirest.io) and 
-[GSON](http://code.google.com/p/google-gson/).  
-The dependencies can be found in thingspeak/dist/lib.
+Add thingspeak-x.y.jar to your project.  There are two dependencies which also need to be included: 
 
-Refer to the included javadocs for more details.  The 
+* [Unirest](http://unirest.io) 
+* [GSON](http://code.google.com/p/google-gson/).  
+
+These dependencies can be found in thingspeak/dist/lib.  Refer to the included javadocs for more details.  The 
 [ThingSpeak API Documentation](http://community.thingspeak.com/documentation/api/#thingspeak_api)
 is also a good source of additional information.
 
