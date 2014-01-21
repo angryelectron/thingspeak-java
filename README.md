@@ -10,10 +10,9 @@ How To Install
 ---
 Get the source by [downloading a zip file](https://github.com/angryelectron/thingspeak-java/archive/master.zip)
 or by cloning the git repository https://github.com/angryelectron/thingspeak-java.git .
-Building the source requires either the [Netbeans IDE](http://netbeans.org) or a 
-Java 7 SDK and Apache Ant. Build the project by opening it in the Netbeans IDE, or from the command line.  
+Building the source requires the Java 7 SDK and Apache Ant, or use the [Netbeans IDE](http://netbeans.org). 
 
-Here is an example of how to install the client in Ubuntu/Debian/Raspbian:
+Here is an example of how to install the client from the command line in Ubuntu/Debian/Raspbian with a minimal build environment:
 
 ```
 sudo apt-get update
@@ -24,20 +23,23 @@ ant jar
 ant test #optional - run tests 
 ```
 
-The jars, docs, and dependencies can be found in thingspeak/dist.
+After building, the jars, docs, and dependencies can be found in thingspeak/dist.
 
 How To Use
 ---
-Add thingspeak-x.y.jar to your project.  There are two dependencies which also need to be included: 
+Add thingspeak-x.y.jar to your project and the following dependencies:
 
 * [Unirest](http://unirest.io) 
-* [GSON](http://code.google.com/p/google-gson/).  
+* [GSON](http://code.google.com/p/google-gson/) 
 
-These dependencies can be found in thingspeak/dist/lib.  Refer to the included javadocs for more details.  The 
-[ThingSpeak API Documentation](http://community.thingspeak.com/documentation/api/#thingspeak_api)
-is also a good source of additional information.
+Dependencies can be found in thingspeak/dist/lib after building the source.  Refer to the included javadocs for more details.  The [ThingSpeak API Documentation](http://community.thingspeak.com/documentation/api/#thingspeak_api)
+is also a good source of additional information about using the API.
 
-Here is how to write "hello" to field1 of ThingSpeak public channel 1234:
+If you encounter any issues with the ThingSpeak Java Client, please use the [GitHub issue tracker](https://github.com/angryelectron/thingspeak-java/issues).
+
+Examples
+---
+Here is how to write "hello" to field1 of ThingSpeak public channel 1234. 
 
 ```
 String apiWriteKey = "your-channel-write-key";
@@ -56,8 +58,7 @@ Entry entry = channel.getLastChannelEntry();
 System.out.println(entry.getField(1);
 ```
 
-If you encounter any issues with the ThingSpeak Java Client, please use the [GitHub issue tracker](https://github.com/angryelectron/thingspeak-java/issues).
-
+Please refer to thingspeak/dist/javadoc for more information about customzing channel feeds, searching public channels, using open-source servers, and all the other operations supported by the ThingSpeak API.
 
 About
 ---
