@@ -6,6 +6,9 @@ update channel data, retrieve and examine feeds, and query public channels.
 It supports the hosted ThingSpeak server at api.thingspeak.com as well 
 as self-hosted open-source servers ([GitHub Source](https://github.com/iobridge/thingspeak)). 
 
+Also included:  An appender for log4j - post data to ThingSpeak channels using Logger
+framework.
+
 How To Install
 ---
 Get the source by [downloading a zip file](https://github.com/angryelectron/thingspeak-java/archive/master.zip)
@@ -59,6 +62,30 @@ System.out.println(entry.getField(1);
 ```
 
 Please refer to thingspeak/dist/javadoc for more information about customzing channel feeds, searching public channels, using open-source servers, and all the other operations supported by the ThingSpeak API.
+
+log4j Appender
+---
+Use log4j to update ThingSpeak channels.  Log date, level, and message are 'fields',
+written as an 'entry'.  Here's how to configure the appender and send a test 
+message (just add your own channelNumber and apiWriteKey):
+
+```
+ThingSpeakAppender appender = new ThingSpeakAppender();
+appender.configureChannel(channelNumber, apiWriteKey);
+appender.setThreshold(Level.INFO);
+appender.activateOptions();
+Logger.getRootLogger().addAppender(appender);
+Logger.getLogger(this.getClass()).log(Level.INFO, "Hello World");
+```
+
+You can also configure the appender via log4j.properties:
+
+```
+log4j.rootLogger=INFO, ThingSpeak
+log4j.appender.ThingSpeak=com.angryelectron.thingspeak.log4j.ThingSpeakAppender
+com.angryelectron.thingspeak.log4j.channelNumber = YOUR_CHANNEL_NUMBER
+com.angryelectron.thingspeak.log4j.apiWriteKey = YOUR_API_WRITE_KEY
+```
 
 About
 ---
