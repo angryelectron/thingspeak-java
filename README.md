@@ -89,6 +89,7 @@ log4j.appender.ThingSpeak=com.angryelectron.thingspeak.log4j.ThingSpeakAppender
 com.angryelectron.thingspeak.log4j.channelNumber = YOUR_CHANNEL_NUMBER
 com.angryelectron.thingspeak.log4j.apiWriteKey = YOUR_API_WRITE_KEY
 ```
+See the javadocs for more details.
 
 About
 ---
