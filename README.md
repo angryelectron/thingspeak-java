@@ -65,8 +65,11 @@ Please refer to thingspeak/dist/javadoc for more information about customzing ch
 
 log4j Appender
 ---
-Use log4j to update ThingSpeak channels.  Log date, level, and message are 'fields',
-written as an 'entry'.  Here's how to configure the appender and send a test 
+Use log4j to update ThingSpeak channels.  Date, Level, and Message are 'fields',
+written as an 'entry'.  Setup a new ThingSpeak channel with these three fields, then
+pass the channel number and API write-key to the appender.
+
+Here's how to configure the appender and send a test 
 message (just add your own channelNumber and apiWriteKey):
 
 ```
