@@ -130,7 +130,8 @@ public class Channel {
 
     /**
      * Use a server other than thingspeak.com. If you are hosting your own
-     * Thingspeak server, set the url of the server here.
+     * Thingspeak server, set the url of the server here.  The url of the public
+     * Thingspeak server is http://api.thingspeak.com
      *
      * @param url eg. http://localhost, http://thingspeak.local:3000, etc.
      */

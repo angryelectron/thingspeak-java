@@ -45,7 +45,18 @@ public class ThingSpeakAppenderTest {
     public void testAppend() {
         System.out.println("append.");        
         ThingSpeakAppender appender = new ThingSpeakAppender();
-        appender.configureChannel(channelNumber, apiWriteKey);
+        appender.configureChannel(channelNumber, apiWriteKey, null);
+        appender.setThreshold(Level.INFO);
+        appender.activateOptions();
+        Logger.getRootLogger().addAppender(appender);
+        Logger.getLogger(this.getClass()).log(Level.INFO, "Test message from ThingSpeakAppender");
+    }
+    
+    @Test
+    public void testAppendWithServer() {
+        System.out.println("appendWithServer.");        
+        ThingSpeakAppender appender = new ThingSpeakAppender();
+        appender.configureChannel(channelNumber, apiWriteKey, "http://api.thingspeak.com");
         appender.setThreshold(Level.INFO);
         appender.activateOptions();
         Logger.getRootLogger().addAppender(appender);
