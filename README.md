@@ -22,8 +22,7 @@ sudo apt-get update
 sudo apt-get -y install openjdk-7-jdk git ant
 git clone https://github.com/angryelectron/thingspeak-java.git
 cd thingspeak-java
-ant jar
-ant test #optional - run tests 
+ant
 ```
 
 After building, the jars, docs, and dependencies can be found in thingspeak/dist.
@@ -74,7 +73,7 @@ message (just add your own channelNumber and apiWriteKey):
 
 ```
 ThingSpeakAppender appender = new ThingSpeakAppender();
-appender.configureChannel(channelNumber, apiWriteKey);
+appender.configureChannel(channelNumber, apiWriteKey, "http://api.thingspeak.com");
 appender.setThreshold(Level.INFO);
 appender.activateOptions();
 Logger.getRootLogger().addAppender(appender);
@@ -89,6 +88,12 @@ log4j.appender.ThingSpeak=com.angryelectron.thingspeak.log4j.ThingSpeakAppender
 com.angryelectron.thingspeak.log4j.channelNumber = YOUR_CHANNEL_NUMBER
 com.angryelectron.thingspeak.log4j.apiWriteKey = YOUR_API_WRITE_KEY
 ```
+To use your own server (other than api.thingspeak.com):
+
+```
+com.angryelectron.thingpseak.log4j.server = YOUR_THINGSPEAK_SERVER_URL
+```
+
 See the javadocs for more details.
 
 About
@@ -109,4 +114,3 @@ Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
 the ThingSpeak Java Client. If not, see <http://www.gnu.org/licenses/>.
-
