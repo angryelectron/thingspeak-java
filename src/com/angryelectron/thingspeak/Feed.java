@@ -202,7 +202,7 @@ public class Feed {
      */
     public Entry getEntry(Integer id) throws ThingSpeakException {
         for (Entry entry : this.feeds) {
-            if (entry.getEntryId() == id) {
+            if (entry.getEntryId().equals(id)) {
                 return entry;
             }
         }
