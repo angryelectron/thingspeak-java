@@ -19,10 +19,22 @@
 
 package com.angryelectron.thingspeak;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class UpdateTest {    
         
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        BasicConfigurator.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger.getLogger("org.apache.http").setLevel(Level.OFF);
+    }
+            
     /**
      * Pause to prevent multiple update requests from exceeding the API rate
      * limit.  Call all the end of each test to prevent subsequent tests from

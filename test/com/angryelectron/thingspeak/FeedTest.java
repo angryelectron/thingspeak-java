@@ -22,6 +22,9 @@ package com.angryelectron.thingspeak;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -38,6 +41,9 @@ public class FeedTest {
      */
     @BeforeClass
     public static void setUpClass() throws Exception {
+        BasicConfigurator.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger.getLogger("org.apache.http").setLevel(Level.OFF);
         Entry entry = new Entry();
         entry.setElevation(0.0);
         entry.setField(1, "nonsense-data1");
@@ -129,7 +135,7 @@ public class FeedTest {
         FeedParameters options = new FeedParameters();
         options.location(true);
         options.status(true);
-        Feed publicFeed = publicChannel.getChannelFeed(options);
+        Feed publicFeed = publicChannel.getChannelFeed(options);                               
         Entry entry = publicFeed.getChannelLastEntry();
         assertNotNull(entry.getStatus());
         assertNotNull(entry.getElevation());

@@ -19,6 +19,7 @@
 
 package com.angryelectron.thingspeak.log4j;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -43,18 +44,24 @@ public class ThingSpeakAppenderTest {
      */
     @Test
     public void testAppend() {
-        System.out.println("append.");        
+        System.out.println("append.");  
+        BasicConfigurator.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger.getLogger("org.apache.http").setLevel(Level.OFF);
         ThingSpeakAppender appender = new ThingSpeakAppender();
         appender.configureChannel(channelNumber, apiWriteKey, null);
         appender.setThreshold(Level.INFO);
-        appender.activateOptions();
+        appender.activateOptions();        
         Logger.getRootLogger().addAppender(appender);
         Logger.getLogger(this.getClass()).log(Level.INFO, "Test message from ThingSpeakAppender");
     }
     
     @Test
     public void testAppendWithServer() {
-        System.out.println("appendWithServer.");        
+        System.out.println("appendWithServer.");      
+        BasicConfigurator.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger.getLogger("org.apache.http").setLevel(Level.OFF);
         ThingSpeakAppender appender = new ThingSpeakAppender();
         appender.configureChannel(channelNumber, apiWriteKey, "http://api.thingspeak.com");
         appender.setThreshold(Level.INFO);
