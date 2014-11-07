@@ -7,7 +7,7 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="ThingSpeak" default="default" basedir=".">
+<project name="ThingSpeak" default="default-notest" basedir=".">
     <description>Builds, tests, and runs the project ThingSpeak.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
@@ -70,6 +70,8 @@
     nbproject/build-impl.xml file. 
 
     -->
+ 
+    <target depends="jar,javadoc" description="Build and test whole project without tests." name="default-notest"/>
     
     <target name="-post-jar" description="bundle sources and javadoc in a jar" depends="javadoc">
         <jar compress="${jar.compress}" basedir="${src.dir}" jarfile="${dist.dir}/${application.title}-sources.jar"/>
