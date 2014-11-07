@@ -1,2 +1,10 @@
+2014-11-06  Andrew Bythell  <abythell@ieee.org>
+
+	* release v1.1
+	* improved test methods
+	* fix "lastEntry" bug
+	* remove tests from default ant target
+
 2014-01-09  Andrew Bythell  <abythell@ieee.org>
+
 	* initial release
