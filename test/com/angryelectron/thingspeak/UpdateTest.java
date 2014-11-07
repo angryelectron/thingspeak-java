@@ -1,6 +1,5 @@
 /**
- * ThingSpeak Java Client 
- * Copyright 2014, Andrew Bythell <abythell@ieee.org>
+ * ThingSpeak Java Client Copyright 2014, Andrew Bythell <abythell@ieee.org>
  * http://angryelectron.com
  *
  * The ThingSpeak Java Client is free software: you can redistribute it and/or
@@ -16,29 +15,41 @@
  * You should have received a copy of the GNU General Public License along with
  * theThingSpeak Java Client. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.angryelectron.thingspeak;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class UpdateTest {    
-        
+public class UpdateTest {
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        BasicConfigurator.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger.getLogger("org.apache.http").setLevel(Level.OFF);
+        pauseForAPIRateLimit();
+    }
+
     /**
      * Pause to prevent multiple update requests from exceeding the API rate
-     * limit.  Call all the end of each test to prevent subsequent tests from
-     * failing.  By appending to the end of each test instead of calling it using
-     * \@After, time can be saved when running tests that throw exceptions and don't
-     * actually do a successful update.
-     * @throws InterruptedException 
+     * limit. Call all the end of each test to prevent subsequent tests from
+     * failing. By appending to the end of each test instead of calling it using
+     * \@After, time can be saved when running tests that throw exceptions and
+     * don't actually do a successful update.
+     *
+     * @throws InterruptedException
      */
-    private void pauseForAPIRateLimit() throws InterruptedException {
+    private static void pauseForAPIRateLimit() throws InterruptedException {
         System.out.println("Waiting for rate limit to expire.");
         Thread.sleep(TestChannelSettings.rateLimit);
     }
-    
+
     @Test
-    public void testUpdateChannel() throws Exception{
-        System.out.println("testUpdatePublicChannel");
+    public void testUpdateChannel() throws Exception {
+        System.out.println("testUpdateChannel");
         Channel channel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);
         channel.setUrl(TestChannelSettings.server);
         Integer result = channel.update(new Entry());
@@ -46,16 +57,18 @@ public class UpdateTest {
         pauseForAPIRateLimit();
     }
 
-    
     @Test(expected = ThingSpeakException.class)
     public void testUpdateChannelWithInvalidAPIKey() throws Exception {
         System.out.println("testUpdatePublicChannelWithInvalidAPIKey");
-        Channel channel = new Channel(TestChannelSettings.publicChannelID, "invalidChannelKey");        
+        Channel channel = new Channel(TestChannelSettings.publicChannelID, "invalidChannelKey");
         channel.setUrl(TestChannelSettings.server);
-        channel.update(new Entry());
-        pauseForAPIRateLimit();
+        try {
+            channel.update(new Entry());
+        } finally {
+            pauseForAPIRateLimit();
+        }
     }
-            
+
     @Test
     public void testUpdateSlowerThanAPIRateLimit() throws Exception {
         System.out.println("testUpdateSlowerThanAPIRateLimit");
@@ -65,22 +78,22 @@ public class UpdateTest {
         Channel channel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);
         channel.setUrl(TestChannelSettings.server);
         Integer result0 = channel.update(new Entry());
-        assert(result0 != 0);
-        
+        assert (result0 != 0);
+
         /**
          * Pause until the rate limit has passed.
          */
         Thread.sleep(TestChannelSettings.rateLimit);
-        
+
         /**
          * Do another update and make sure it succeeds.
          */
         Integer result1 = channel.update(new Entry());
-        assert(result1 != 0);
-        
+        assert (result1 != 0);
+
         pauseForAPIRateLimit();
     }
-    
+
     @Test(expected = ThingSpeakException.class)
     public void testUpdateFasterThanAPIRateLimit() throws Exception {
         System.out.println("testUpdateFasterThanAPIRateLimit");
@@ -90,22 +103,24 @@ public class UpdateTest {
         if (TestChannelSettings.rateLimit == 0) {
             throw new ThingSpeakException("Rate limiting not supported");
         }
-        
+
         /**
          * Do an update and make sure it succeeds.
          */
         Channel channel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);
         channel.setUrl(TestChannelSettings.server);
         Integer result = channel.update(new Entry());
-        assert(result != 0);
-        
+        assert (result != 0);
+
         /**
-         * Don't wait for the rate limit to pass - send another update
-         * right away.  This should cause a ThingSpeakException.
+         * Don't wait for the rate limit to pass - send another update right
+         * away. This should cause a ThingSpeakException.
          */
-        channel.update(new Entry());        
-                
-        pauseForAPIRateLimit();
+        try {
+            channel.update(new Entry());
+        } finally {
+            pauseForAPIRateLimit();
+        }
     }
- 
+
 }

@@ -22,6 +22,9 @@ package com.angryelectron.thingspeak;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -38,6 +41,9 @@ public class FeedTest {
      */
     @BeforeClass
     public static void setUpClass() throws Exception {
+        BasicConfigurator.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger.getLogger("org.apache.http").setLevel(Level.OFF);
         Entry entry = new Entry();
         entry.setElevation(0.0);
         entry.setField(1, "nonsense-data1");
@@ -76,6 +82,7 @@ public class FeedTest {
     
     @Test
     public void testGetChannelFeedPublic() throws Exception {
+        System.out.println("testGetChannelFeedPublic");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);
         publicChannel.setUrl(TestChannelSettings.server);
         Feed publicFeed = publicChannel.getChannelFeed();
@@ -92,6 +99,7 @@ public class FeedTest {
     
     @Test
     public void testGetChannelFeedPrivate() throws Exception {
+        System.out.println("testGetChannelFeedPrivate");
         Channel publicChannel = new Channel(TestChannelSettings.privateChannelID, TestChannelSettings.privateChannelWriteKey, TestChannelSettings.privateChannelReadKey);
         publicChannel.setUrl(TestChannelSettings.server);
         Feed publicFeed = publicChannel.getChannelFeed();
@@ -124,12 +132,13 @@ public class FeedTest {
     
     @Test
     public void testGetChannelFeedWithOptions() throws Exception {
+        System.out.println("testGetChannelFeedWithOptions");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);
         publicChannel.setUrl(TestChannelSettings.server);
         FeedParameters options = new FeedParameters();
         options.location(true);
         options.status(true);
-        Feed publicFeed = publicChannel.getChannelFeed(options);
+        Feed publicFeed = publicChannel.getChannelFeed(options);                               
         Entry entry = publicFeed.getChannelLastEntry();
         assertNotNull(entry.getStatus());
         assertNotNull(entry.getElevation());
@@ -139,6 +148,7 @@ public class FeedTest {
     
     @Test
     public void testGetLastEntry() throws Exception {
+        System.out.println("testGetLastEntry");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);        
         publicChannel.setUrl(TestChannelSettings.server);
         Entry entry = publicChannel.getLastChannelEntry();
@@ -159,6 +169,7 @@ public class FeedTest {
     
     @Test
     public void testGetLastEntryWithOptions() throws Exception {
+        System.out.println("testGetLastEntryWithOptions");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID, TestChannelSettings.publicChannelWriteKey);
         publicChannel.setUrl(TestChannelSettings.server);
         FeedParameters options = new FeedParameters();
@@ -173,6 +184,7 @@ public class FeedTest {
     
     @Test
     public void testGetLastEntryWithTimezoneOffset() throws Exception {
+        System.out.println("testGetLastEntryWithTimezoneOffset");
         Channel channel = new Channel(TestChannelSettings.publicChannelID);
         channel.setUrl(TestChannelSettings.server);
         FeedParameters options = new FeedParameters();
@@ -184,6 +196,7 @@ public class FeedTest {
     
      @Test
     public void testGetFieldFeed() throws Exception {
+        System.out.println("testGetFieldFeed");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID);
         publicChannel.setUrl(TestChannelSettings.server);
         Feed feed = publicChannel.getFieldFeed(1);
@@ -206,6 +219,7 @@ public class FeedTest {
     
     @Test
     public void testGetFieldFeedWithOptions() throws Exception {
+        System.out.println("testGetFieldFeedWithOptions");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID);
         publicChannel.setUrl(TestChannelSettings.server);
         FeedParameters options = new FeedParameters();
@@ -224,6 +238,7 @@ public class FeedTest {
     
     @Test
     public void testGetFieldFeedLastEntry() throws Exception {
+        System.out.println("testGetFieldFeedLastEntry");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID);        
         publicChannel.setUrl(TestChannelSettings.server);
         Entry entry = publicChannel.getLastFieldEntry(1);
@@ -233,6 +248,7 @@ public class FeedTest {
     
     @Test
     public void testGetFieldFeedLastEntryWithOptions() throws Exception {
+        System.out.println("testGetFieldFeedLastEntryWithOptions");
         Channel publicChannel = new Channel(TestChannelSettings.publicChannelID);        
         publicChannel.setUrl(TestChannelSettings.server);
         FeedParameters options = new FeedParameters();
@@ -249,6 +265,7 @@ public class FeedTest {
     
     @Test
     public void testGetStatus() throws Exception {
+        System.out.println("testGetStatus");
         Channel channel = new Channel(TestChannelSettings.publicChannelID);
         channel.setUrl(TestChannelSettings.server);
         Feed feed = channel.getStatusFeed();
@@ -259,6 +276,7 @@ public class FeedTest {
     
     @Test
     public void testGetStatusWithOptions() throws Exception {
+        System.out.println("testGetStatusWithOptions");
         Channel channel = new Channel(TestChannelSettings.publicChannelID);
         channel.setUrl(TestChannelSettings.server);
         FeedParameters options = new FeedParameters();
@@ -273,6 +291,7 @@ public class FeedTest {
     
     @Test
     public void testGetStatus_emptyFields() throws Exception {
+        System.out.println("testGetStatusEmptyFields");
         Channel channel = new Channel(TestChannelSettings.publicChannelID);
         channel.setUrl(TestChannelSettings.server);
         Feed statusFeed = channel.getStatusFeed();

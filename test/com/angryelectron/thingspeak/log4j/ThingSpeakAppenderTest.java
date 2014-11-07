@@ -19,8 +19,11 @@
 
 package com.angryelectron.thingspeak.log4j;
 
+import com.angryelectron.thingspeak.TestChannelSettings;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -36,31 +39,33 @@ public class ThingSpeakAppenderTest {
     
     public ThingSpeakAppenderTest() {
     }
+    
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        BasicConfigurator.resetConfiguration();
+        BasicConfigurator.configure();
+        Logger.getLogger("org.apache.http").setLevel(Level.OFF);
+        pauseForAPIRateLimit();
+    }
+    
+    private static void pauseForAPIRateLimit() throws InterruptedException {
+        System.out.println("Waiting for rate limit to expire.");
+        Thread.sleep(TestChannelSettings.rateLimit);
+    }
 
     /**
      * Test of configureChannel method, of class ThingSpeakAppender.  To view the
      * logged data on ThingSpeak, visit https://thingspeak.com/channels/15662/feeds.     
+     * @throws java.lang.InterruptedException
      */
     @Test
-    public void testAppend() {
-        System.out.println("append.");        
+    public void testAppend() throws InterruptedException {
+        System.out.println("testAppend");  
         ThingSpeakAppender appender = new ThingSpeakAppender();
         appender.configureChannel(channelNumber, apiWriteKey, null);
         appender.setThreshold(Level.INFO);
-        appender.activateOptions();
+        appender.activateOptions();        
         Logger.getRootLogger().addAppender(appender);
         Logger.getLogger(this.getClass()).log(Level.INFO, "Test message from ThingSpeakAppender");
     }
-    
-    @Test
-    public void testAppendWithServer() {
-        System.out.println("appendWithServer.");        
-        ThingSpeakAppender appender = new ThingSpeakAppender();
-        appender.configureChannel(channelNumber, apiWriteKey, "http://api.thingspeak.com");
-        appender.setThreshold(Level.INFO);
-        appender.activateOptions();
-        Logger.getRootLogger().addAppender(appender);
-        Logger.getLogger(this.getClass()).log(Level.INFO, "Test message from ThingSpeakAppender");
-    }
-    
 }
