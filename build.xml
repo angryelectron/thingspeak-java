@@ -78,5 +78,21 @@
         <jar compress="${jar.compress}" basedir="${test.src.dir}" jarfile="${dist.dir}/${application.title}-test.jar"/>
         <jar compress="${jar.compress}" basedir="${dist.javadoc.dir}" jarfile="${dist.dir}/${application.title}-javadoc.jar"/>
     </target>
+
+    <target name="dist" description="create a distribution package" depends="default-notest">
+	<delete file="${application.title}.zip"/>
+	<mkdir dir="${application.title}" />
+	<copy todir="${application.title}">
+		<fileset dir="${dist.dir}">
+			<exclude name="README.TXT" />
+		</fileset>
+	</copy>
+	<copy file="ChangeLog" todir="${application.title}" />
+	<copy file="README.md" todir="${application.title}" />
+	<zip destfile="${application.title}.zip">
+		<zipfileset dir="${application.title}" />
+	</zip>
+	<delete dir="${application.title}"/>
+    </target>
             
 </project>
