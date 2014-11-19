@@ -103,7 +103,7 @@ com.angryelectron.thingspeak.log4j.apiWriteKey = YOUR_API_WRITE_KEY
 To use your own server (other than api.thingspeak.com):
 
 ```
-com.angryelectron.thingpseak.log4j.server = YOUR_THINGSPEAK_SERVER_URL
+com.angryelectron.thingspeak.log4j.server = YOUR_THINGSPEAK_SERVER_URL
 ```
 
 See the javadocs for more details.
