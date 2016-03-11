@@ -61,7 +61,7 @@ public class Channel {
      *
      * @param channelId Channel Id.
      * @param writeKey API Key for the channel. See
-     * https://thingspeak.com/channels/<channelId>#apikeys
+     * https://thingspeak.com/channels/&lt;channelId&gt;#apikeys
      */
     public Channel(Integer channelId, String writeKey) {
         this.isPublic = true;
@@ -74,9 +74,9 @@ public class Channel {
      *
      * @param channelId Channel Id.
      * @param writeKey Write API Key. See
-     * https://thingspeak.com/channels/<channelId>#apikeys.
+     * https://thingspeak.com/channels/&lt;channelId&gt;#apikeys.
      * @param readKey Read API Key. See
-     * https://thingspeak.com/channels/<channelId>#apikeys.
+     * https://thingspeak.com/channels/&lt;channelId&gt;#apikeys.
      */
     public Channel(Integer channelId, String writeKey, String readKey) {
         this.channelId = channelId;
@@ -207,7 +207,7 @@ public class Channel {
      * faster alternative to getting a Channel Feed and then calling
      * {@link Feed#getChannelLastEntry()}
      *
-     * @param options
+     * @param options Supported options: offset, status, and location.
      * @return Entry.
      * @throws UnirestException The request cannot be made.
      * @throws ThingSpeakException The request is invalid.

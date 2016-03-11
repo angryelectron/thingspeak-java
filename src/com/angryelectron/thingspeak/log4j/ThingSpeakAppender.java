@@ -45,7 +45,7 @@ import org.apache.log4j.spi.LoggingEvent;
  *
  * <p>
  * Then create and configure a new appender. Use
- * {@link #configureChannel(java.lang.Integer, java.lang.String) configureChannel}
+ * {@link #configureChannel(Integer, String, String) configureChannel}
  * to configure the appender, or set via log4j.properties:</p>
  * <ul>
  * <li>log4j.appender.ThingSpeak=com.angryelectron.thingspeak.log4j.ThingSpeakAppender</li>
@@ -100,10 +100,10 @@ public class ThingSpeakAppender extends AppenderSkeleton {
      * (thingpspeak.com) will be used.
      */
     public void configureChannel(Integer channelNumber, String apiWriteKey, String url) {        
-            channel = new Channel(channelNumber, apiWriteKey);
-            if (url != null) {
-                channel.setUrl(url);
-            }
+        channel = new Channel(channelNumber, apiWriteKey);
+        if (url != null) {
+            channel.setUrl(url);
+        }
     }
     
     /**
