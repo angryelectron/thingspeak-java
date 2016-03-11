@@ -230,6 +230,15 @@ public class Entry {
         updateMap.put("tweet", tweet);
     }
 
+	/**
+     * Set the created_at date of an entry, since the rate limit of the public Thingspeak server is 15 sec
+     * @param created_at date which will be send to thingspeak
+     */
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+        updateMap.put("created_at", created_at);
+    }
+	
     /**
      * Get date on which this channel entry was created.  Use 
      * {@link FeedParameters#offset(java.lang.Integer)} to adjust timezones.
