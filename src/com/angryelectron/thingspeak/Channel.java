@@ -310,4 +310,19 @@ public class Channel {
     public void getUserChannels() {
         throw new UnsupportedOperationException("Not implemented.");
     }
+	
+    /**
+     * Checks if a channel is available/reachable. Use this method if you want to avoid handling exceptions.
+     *
+     * @return channel availability
+     */
+    public boolean isAvailable() {
+        String url = APIURL + "/channels/" + this.channelId + "/feed.json" + "?key=" + this.readAPIKey + "&results=0";
+        try {
+            thingRequest(url);
+        } catch (UnirestException | ThingSpeakException e) {
+            return false;
+        }
+        return true;
+    }
 }
