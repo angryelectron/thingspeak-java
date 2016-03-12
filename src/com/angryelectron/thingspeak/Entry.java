@@ -232,7 +232,7 @@ public class Entry {
 
     /**
      * Set the created date of an entry. If not explicitly set, the channel update time is used.
-	 * Useful when entries are not created and updated at the same time (offline mode, queuing to avoid rate-limiting, etc.)
+     * Useful when entries are not created and updated at the same time (offline mode, queuing to avoid rate-limiting, etc.)
      * @param created date which will be send to thingspeak
      */
     public void setCreated(Date created) {
