@@ -231,6 +231,16 @@ public class Entry {
     }
 
     /**
+     * Set the created date of an entry. If not explicitly set, the channel update time is used.
+     * Useful when entries are not created and updated at the same time (offline mode, queuing to avoid rate-limiting, etc.)
+     * @param created date which will be send to thingspeak
+     */
+    public void setCreated(Date created) {
+        this.created_at = created;
+        updateMap.put("created_at", created);
+    }
+	
+    /**
      * Get date on which this channel entry was created.  Use 
      * {@link FeedParameters#offset(java.lang.Integer)} to adjust timezones.
      * @return Date.
