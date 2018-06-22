@@ -51,23 +51,31 @@ tracker](https://github.com/angryelectron/thingspeak-java/issues).
 
 Examples
 ---
-Here is how to write "hello" to field1 of ThingSpeak public channel 1234. 
+
+Here is how to write "hello" to field1 of ThingSpeak public channel 1234, then read it back.
 
 ```
-String apiWriteKey = "your-channel-write-key";
-Channel channel = new Channel(1234, apiWriteKey);
+import com.angryelectron.thingspeak.*;
 
-Entry entry = new Entry();
-entry.setField(1, "hello");
-channel.update(entry);
-```
+public class ThingExample {
 
-And here is how to read it back:
+    public static void main(String[] args) throws Exception {
+        String apiWriteKey = "your-channel-write-key";
+        Channel channel = new Channel(1, apiWriteKey);        
+        try {            
+            // write something
+            Entry writeEntry = new Entry();
+            writeEntry.setField(1, "Hello");            
+            // read it back
+            Entry readEntry = channel.getLastChannelEntry();
+            System.out.println(readEntry.getField(1));
+        } catch(Exception ex) {
+            System.out.println(ex);
+        } 
+    }
+    
+}
 
-```
-Channel channel = new Channel(1234);
-Entry entry = channel.getLastChannelEntry();
-System.out.println(entry.getField(1);
 ```
 
 Please refer to thingspeak/dist/javadoc for more information about customzing
